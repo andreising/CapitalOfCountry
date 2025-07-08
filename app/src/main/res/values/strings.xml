@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CapitalOfCountry</string>
+    <string name="empty_number_error_message">Please enter a capital</string>
 </resources>

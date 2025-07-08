@@ -37,9 +37,11 @@ android {
 
 dependencies {
 
+    implementation (libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
