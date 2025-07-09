@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">CapitalOfCountry</string>
     <string name="empty_number_error_message">Please enter a capital</string>
+    <string name="no_connection_message">No internet connection</string>
+    <string name="illegal_capital">Incorrect name of the capital</string>
+    <string name="service_unavailable">Servise is anavailable</string>
 </resources>
