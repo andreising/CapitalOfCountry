@@ -1,5 +1,7 @@
 package com.andreising.capitalofcountry.capital.domain
 
+import com.andreising.capitalofcountry.R
+import com.andreising.capitalofcountry.capital.presentation.ManageResource
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -14,7 +16,10 @@ class CapitalInteractorTest {
     @Test
     fun `set up`() {
         repository = TestCapitalRepository()
-        interactor = CapitalInteractor.Base(repository = repository)
+        interactor = CapitalInteractor.Base(
+            capitalRepository = repository,
+            handler = CapitalExceptionHandler.Base(TestManageResource())
+        )
     }
 
     @Test
@@ -84,52 +89,7 @@ class CapitalInteractorTest {
     }
 
     @Test
-    fun `fetch info by uppercase capital expected success with info`() = runBlocking {
-        // prepare
-        repository.setNewCountryInfo(
-            CountryInfo(
-                "Germany",
-                "Berlin",
-                "Europe",
-                listOf("German"),
-                "flag link",
-                CountryCurrency("Euro", "symbol")
-            )
-        )
-
-        // action
-        val expected = CapitalResult.Success(
-            data = listOf(
-                CountryInfo(
-                    "Germany",
-                    "Berlin",
-                    "Europe",
-                    listOf("German"),
-                    "flag link",
-                    CountryCurrency("Euro", "symbol")
-                )
-            )
-        )
-        val actual = interactor.countryByCapital("BERLIN")
-
-        // check
-        assertEquals(1, repository.countryInfoListCalled.size)
-        assertEquals(
-            CountryInfo(
-                "Germany",
-                "Berlin",
-                "Europe",
-                listOf("German"),
-                "flag link",
-                CountryCurrency("Euro", "symbol")
-            ), repository.countryInfoListCalled[0]
-        )
-        assertEquals(1, repository.byCapitalCalled)
-        assertEquals(expected, actual)
-    }
-
-    @Test
-    fun `fetch info by lowercase capital expected success with info`() = runBlocking {
+    fun `fetch info by right capital expected success with info`() = runBlocking {
         // prepare
         repository.setNewCountryInfo(
             CountryInfo(
@@ -242,12 +202,22 @@ class CapitalInteractorTest {
             return allCountries
         }
 
-        override suspend fun countryInfoByCapital(capital: String): CountryInfo {
+        override suspend fun countryInfoByCapital(capital: String): List<CountryInfo> {
+            byCapitalCalled++
             expectedError?.let { throw it }
             countryInfoListCalled.add(expectedCountryInfo)
-            return expectedCountryInfo
+            allCountries.addFirst(expectedCountryInfo)
+            return allCountries
         }
     }
 
-
+    private class TestManageResource : ManageResource {
+        override fun string(id: Int): String {
+            return when (id) {
+                R.string.no_internet -> "No internet connection"
+                R.string.wrong_capital -> "Unavailable capital"
+                else -> ""
+            }
+        }
+    }
 }
