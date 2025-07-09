@@ -35,11 +35,10 @@ class CapitalViewModelTest : BaseTest() {
         val mapper = CapitalResultMapper(communications, CountryUiMapper())
         testManageResources = TestManageResources()
         viewModel = CapitalViewModel(
-            TestDispatchersList(),
+            HandleCapitalRequest.Base(TestDispatchersList(), communications, mapper),
             testManageResources,
             communications,
-            interactor,
-            mapper
+            interactor
         )
     }
 
