@@ -226,7 +226,7 @@ class CapitalInteractorTest {
     fun `fetch info by capital without internet connection, expect exception`() = runBlocking {
         // prepare
         localRepository.setNewCountryList(emptyList())
-        cloudRepository.expectingError(error = NoInternetConnection())
+        cloudRepository.expectingError(error = NoInternetConnectionException())
 
         // action
         val expected = CapitalResult.Failure(message = "No internet connection")
@@ -246,7 +246,7 @@ class CapitalInteractorTest {
     fun `fetch info by wrong capital, expect exception`() = runBlocking {
         // prepare
         localRepository.setNewCountryList(emptyList())
-        cloudRepository.expectingError(error = IllegalCapitalName())
+        cloudRepository.expectingError(error = IllegalCapitalException())
 
         // action
         val expected = CapitalResult.Failure(message = "Unavailable capital")

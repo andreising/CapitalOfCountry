@@ -4,6 +4,6 @@ abstract class DomainException : IllegalStateException()
 
 class NoInternetConnectionException() : DomainException()
 
-class IllegalCapitalName() : DomainException()
+class IllegalCapitalException() : DomainException()
 
 class ServiceUnavailableException() : DomainException()

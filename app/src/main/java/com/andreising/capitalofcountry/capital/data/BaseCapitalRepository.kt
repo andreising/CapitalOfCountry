@@ -13,12 +13,13 @@ class BaseCapitalRepository(
     override suspend fun allCountry() = allDataBaseCountries.get()
 
     override suspend fun countryInfoByCapital(capital: String): List<CountryInfo> {
-        val dataBaseCountry = local.countryByCapital(capital)
+        val lowerCaseCapital = capital.toLowerCase()
+        val dataBaseCountry = local.countryByCapital(lowerCaseCapital)
         if (dataBaseCountry!=null) {
             local.saveCountry(dataBaseCountry)
         } else {
             try {
-                local.saveCountry(cloud.countryByCapital(capital))
+                local.saveCountry(cloud.countryByCapital(lowerCaseCapital))
             } catch (e: Exception) {
                 ExceptionDataToDomainMapper.Base.map(e)
             }

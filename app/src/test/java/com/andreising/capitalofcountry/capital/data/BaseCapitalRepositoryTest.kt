@@ -8,7 +8,7 @@ import com.andreising.capitalofcountry.capital.domain.CapitalRepository
 import com.andreising.capitalofcountry.capital.domain.CapitalResult
 import com.andreising.capitalofcountry.capital.domain.CountryCurrency
 import com.andreising.capitalofcountry.capital.domain.CountryInfo
-import com.andreising.capitalofcountry.capital.domain.IllegalCapitalName
+import com.andreising.capitalofcountry.capital.domain.IllegalCapitalException
 import com.andreising.capitalofcountry.capital.domain.NoInternetConnectionException
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.runBlocking
@@ -236,7 +236,7 @@ class BaseCapitalRepositoryTest {
         assertEquals(0, cloudDataSource.calledCountries.size)
     }
 
-    @Test(expected = IllegalCapitalName::class)
+    @Test(expected = IllegalCapitalException::class)
     fun `fetch info by wrong capital, expect exception`() = runBlocking {
         // prepare
         localDataSource.setList(emptyList())

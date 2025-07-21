@@ -43,8 +43,8 @@ interface HandleError {
 
     class Base(private val manageResource: ManageResource) : HandleError {
         override fun handle(e: Exception) = when (e) {
-            is NoInternetConnection -> manageResource.string(R.string.no_connection_message)
-            is IllegalCapitalName -> manageResource.string(R.string.illegal_capital)
+            is NoInternetConnectionException -> manageResource.string(R.string.no_connection_message)
+            is IllegalCapitalException -> manageResource.string(R.string.illegal_capital)
             else -> manageResource.string(R.string.service_unavailable)
         }
     }

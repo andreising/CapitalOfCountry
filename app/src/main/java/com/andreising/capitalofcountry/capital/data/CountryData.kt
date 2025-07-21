@@ -22,6 +22,19 @@ data class CountryData(
             currency: String,
             currencySymbol: String
         ): T
+
+        object CreateCountryData : Mapper<CountryData> {
+            override fun map(
+                name: String,
+                capital: String,
+                region: String,
+                languages: List<String>,
+                flagLink: String,
+                currency: String,
+                currencySymbol: String
+            ) = CountryData(name, capital, region, languages, flagLink, currency, currencySymbol)
+
+        }
     }
 
     fun <T> map(mapper: Mapper<T>) = mapper.map(
