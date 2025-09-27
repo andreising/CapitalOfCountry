@@ -33,6 +33,9 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {
@@ -51,4 +54,5 @@ dependencies {
     //retrofit
     implementation (libs.retrofit)
     implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
 }
